@@ -158,11 +158,15 @@ Pytest calls this to create a report for each test phase.
 item = the test item (info about the test).
 call = details about the test phase that ran (setup/call/teardown).
 fter each test phase, if it failed, take screenshot and attach to reports"""
-    yield
+    outcome = yield
+    rep = outcome.get_result()
+    #yield
     """Because we used hookwrapper=True, we must yield first.
     This lets pytest run its own logic.
     After pytest is done, we get back an outcome (result)."""
-    if report.when != "call": return
+    if rep.when == "call" and rep.failed:
+    #if report.when != "call": return
+    mode = "a" if os.path.exists("failures.txt") else "w"
     """Tests have a "Warm-up" (setup) and a "Clean-up" (teardown). 
     This line says: "If the failure happened during warm-up, I don't care. 
     I only want to take a photo if the failure
@@ -170,7 +174,10 @@ fter each test phase, if it failed, take screenshot and attach to reports"""
     if report.failed:
         #If the test body failed, then we continue.
         #If it passed, we skip the screenshot steps.
-        driver = item.funcargs.get("driver", None)
+        #driver = item.funcargs.get("driver", None)
+        driver = None
+        if "driver" in item.funcargs:
+            driver = item.funcargs["driver"]
         #item.funcargs holds the fixtures used by this test.
         #We try to find the driver fixture (the Selenium browser).
         #If it’s there, we can take a screenshot. If not, we can’t.
