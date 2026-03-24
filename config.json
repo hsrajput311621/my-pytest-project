@@ -1,0 +1,13 @@
+
+{
+  "base_url": "https://www.saucedemo.com/",
+  "headless": false,
+  "incognito": true,
+  "disable_notifications": true,
+  "start_maximized": true,
+  "default_timeout": 10
+}
+
+
+//def test_example(driver, config):
+//    driver.get(config["base_url"])

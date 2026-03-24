@@ -1,0 +1,36 @@
+"""Easy to version control.
+Jenkins can read it directly from your repo (“Pipeline from SCM”).
+Anyone who clones the project can run the same CI pipeline.
+
+Alternative: You can also paste the pipeline directly inside Jenkins (as “Pipeline script”), but keeping it in the repo is better.""
+
+"""
+Q2: How to “connect” pytest with Jenkins?
+Jenkins doesn’t connect to pytest directly. Instead:
+Jenkins pulls your code (from Git).
+Jenkins runs a command like pytest ....
+Jenkins collects artifacts (reports, screenshots).
+So the connection is: Jenkins ↔ your repo.
+Your pytest runs as a command inside Jenkins."""
+
+"""
+Step 3 Path A — You use Git (GitHub)
+This is the recommended path.
+Steps:
+In PyCharm, initialize git and push your project to a remote (e.g., GitHub).
+Add a Jenkinsfile at the root of your repo.
+In Jenkins:
+
+Create New Item → Pipeline
+In “Pipeline” section:
+
+Definition: Pipeline script from SCM
+SCM: Git
+Repository URL: your repo URL
+Credentials: (if private)
+Branch: main
+Script Path: Jenkinsfile
+Save → Build Now
+Done. Jenkins will fetch your code and run pytest.
+"""
+
