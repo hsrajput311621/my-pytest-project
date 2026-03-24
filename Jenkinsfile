@@ -100,7 +100,7 @@ pipeline {
                 bat """
                     "${PYTHON_EXE}" -m venv ${VENV_DIR}
                     ${VENV_DIR}\\Scripts\\pip install --upgrade pip
-                    ${VENV_DIR}\\Scripts\\pip install selenium pytest pytest-html allure-pytest webdriver-manager
+                    ${VENV_DIR}\\Scripts\\pip install selenium pytest pytest-html allure-pytest webdriver-manager fonttools
                 """
             }
         }
