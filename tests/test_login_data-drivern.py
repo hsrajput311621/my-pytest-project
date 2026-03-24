@@ -6,6 +6,7 @@ import pytest
 from pathlib import Path
 from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
+import os
 
 def load_json_data():
 #Make a path like: “go to the folder where this script is,
@@ -19,14 +20,20 @@ def load_json_data():
 
 
 def load_csv_data():
-    path = Path(__file__).parent / "data" / "users.csv"
+    file_path = os.path.join("tests", "data", login_data.csv")
+   # path = Path(__file__).parent / "data" / "users.csv"
     rows = []
-    with open(path, newline="", encoding="utf-8") as f:
+    with open(file_path, mode = "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
 #Read the CSV where each row becomes a dictionary using the header names.
         for row in reader:
-            row["expected"] = row["expected"].lower() == "true"
-            rows.append(row)
+            #Defensive check: skip empty rows and strip white spaces from keys
+            row = {k.strip(): v for k, v in row.items() if k is not None}
+            if "expected" in row:
+                row["expected"] = str(row["expected"]).strip().lower() == "true"
+                rows.append(row)
+            else:
+                print(f"Warnin: 'expected' key missing in row: {row}")
 #"Look at the 'expected' column.Clean up any extra spaces and make it lowercase."
             #val = row.get("expected", "").strip().lower()
 #"This is a clever check! If the file says 'true', '1', or 'yes', we count it as a success."
@@ -37,7 +44,7 @@ def load_csv_data():
             #rows.append((row["username"], row["password"], outcome))
 #Pack the username, password, and our new label into a tiny
 # 'gift box' (a tuple) and add it to our list."
-        return rows
+    return rows
 
 @pytest.mark.smoke
 @pytest.mark.parametrize("record", load_json_data())
