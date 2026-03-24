@@ -20,7 +20,7 @@ def load_json_data():
 
 
 def load_csv_data():
-    file_path = os.path.join("tests", "data", login_data.csv")
+    file_path = os.path.join("tests", "data", "users.csv")
    # path = Path(__file__).parent / "data" / "users.csv"
     rows = []
     with open(file_path, mode = "r", encoding="utf-8") as f:
