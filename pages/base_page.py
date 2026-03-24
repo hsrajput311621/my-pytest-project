@@ -1,7 +1,6 @@
 # Base Page like a common toolbox for all your pages (Login page, Cart page, Checkout page).
 #Instead of writing the same code again and again (like “wait for element”, “click”, “type”), we write it once in Base Page and reuse it everywhere.
 
-from asyncio import timeout
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import  logging
@@ -47,10 +46,13 @@ class BasePage:
 #Read text from an element
 #Finds the element and returns its text (like reading the label: “Your Cart”).
 
-    def url_container(self, fragment):
+    def url_contains(self, fragment):
         logger.info(f"WAIT URL contains: {fragment}")
         return self.wait.until(EC.url_contains(fragment))
 
+    # Backward-compatible alias (older tests / typos)
+    url_container = url_contains
+
 # Wait until the URL contains something
-#Example: after login, URL should contain "inventory".
-#This waits until that happens.
+# Example: after login, URL should contain "inventory".
+# This waits until that happens.

@@ -15,7 +15,7 @@ def test_complete_purchase_success(driver):
     # inventory page
     inv = InventoryPage(driver)
     assert inv.is_loaded(), "Inverntory page not loaded after login"
-    assert inv.url_container("inventory"), "URL Not moved to inventory section"
+    assert inv.url_contains("inventory"), "URL Not moved to inventory section"
 
     # add two products
     inv.add_products()
@@ -30,13 +30,13 @@ def test_complete_purchase_success(driver):
     step1 = CheckoutStepOne(driver)
     step1.assert_loaded()
     step1.Fill_Form("Hitesh", "Rajput", "110030")
-    assert step1.url_container("checkout-step-two") , "Did not reach step 2"
+    assert step1.url_contains("checkout-step-two"), "Did not reach step 2"
 
     # Checkout step two
     step2 = CheckoutStepTwo(driver)
     step2.assert_loaded()
     step2.finish()
-    assert step2.url_container("checkout-complete"), "Did not complete complete page"
+    assert step2.url_contains("checkout-complete"), "Did not complete complete page"
 
     # Complete page
     step3 = CheckoutComplete(driver)

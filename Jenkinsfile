@@ -85,7 +85,7 @@ pipeline {
         VENV_DIR    = ".venv"
         // IMPORTANT: Use your actual path here with double backslashes
         PYTHON_EXE = "C:\\Users\\hiteshr\\AppData\\Local\\Programs\\Python\\Python313\\python.exe"
-        
+
     }
 
     stages {

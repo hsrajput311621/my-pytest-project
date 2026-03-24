@@ -109,7 +109,11 @@ def pytest_runtest_makereport(item, call):
     if item.config.pluginmanager.hasplugin("html"):
         from pytest_html import extras
 
-        rep.extra = getattr(rep, "extra", []) + [extras.image(str(ss_path))]
+        img = extras.image(str(ss_path))
+        if hasattr(rep, "extras"):
+            rep.extras = getattr(rep, "extras", []) + [img]
+        else:
+            rep.extra = getattr(rep, "extra", []) + [img]
 
     if item.config.pluginmanager.hasplugin("allure_pytest"):
         try:
