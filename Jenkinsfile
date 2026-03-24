@@ -91,11 +91,15 @@ pipeline {
       }
     }
 
-    stage('Set up Python') {
+stage('Set up Python') {
       steps {
-        // We use 'bat' instead of 'sh' for Windows!
         bat """
-          python -m venv ${VENV_DIR}
+          @echo off
+          echo Checking for Python...
+          py --version >nul 2>&1 && (set PY_CMD=py) || (set PY_CMD=python)
+          
+          echo Using command: %PY_CMD%
+          %PY_CMD% -m venv ${VENV_DIR}
           ${VENV_DIR}\\Scripts\\pip install --upgrade pip
           ${VENV_DIR}\\Scripts\\pip install selenium pytest pytest-html allure-pytest webdriver-manager
         """
