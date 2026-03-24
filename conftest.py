@@ -54,7 +54,7 @@ def configure_logging():
     logs_dir.mkdir(exist_ok=True)
 #exist_ok=True means: “If the folder already exists, don’t crash, it’s okay.”
 #So this line creates the logs folder if it’s not there.
-    log_file = logs_dir / f"run_{datetime().now().strftime('y%m%d_%H%M%S')}.log"
+    log_file = logs_dir / f"run_{datetime.now().strftime('Y%m%d_%H%M%S')}.log"
 #datetime.now() → get the current date and time.
 # .strftime('%Y%m%d_%H%M%S') → format it like 20260323_105530 (YearMonthDay_HourMinuteSecond).
 # f"run_{...}.log" → make a file name like run_20260323_105530.log.
