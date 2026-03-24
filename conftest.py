@@ -152,7 +152,7 @@ options.add_argument("--disable-dev-shm-usage")
    then we do extra stuff after.(Think: “Let pytest run, then I’ll check what happened and act.”).'''
 
 @pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_report(item, call):
+def pytest_runtest_logreport(item, call):
     """This is the hook function.
 Pytest calls this to create a report for each test phase.
 item = the test item (info about the test).
