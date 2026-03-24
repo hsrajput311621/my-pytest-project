@@ -180,7 +180,7 @@ fter each test phase, if it failed, take screenshot and attach to reports"""
             #Path("screenshots") points to a folder named screenshots.
             ss_dir.mkdir(exist_ok=True)
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            test_name = item.name.replace("/","_").replace(r"\","_")
+            test_name = item.name.replace("/","_").replace("\\","_")
             ss_path = ss_dir /f"{test_name}_{timestamp}.png"
             """timestamp = current date/time like 20260323_112045.
 test_name = the test’s name, but we replace / and \ so it’s safe for file names.
