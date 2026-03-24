@@ -7,7 +7,3 @@
   "start_maximized": true,
   "default_timeout": 10
 }
-
-
-//def test_example(driver, config):
-//    driver.get(config["base_url"])
