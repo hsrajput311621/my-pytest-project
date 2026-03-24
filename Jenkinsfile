@@ -27,7 +27,7 @@
 //           if [ -f requirements.txt ]; then
 //             ${PIP} install -r requirements.txt
 //           else
-//             ${PIP} install selenium pytest pytest-html allure-pytest pytest-xdist webdriver-manager
+//             bat "${VENV_DIR}\\Scripts\\pip install selenium pytest pytest-html allure-pytest webdriver-manager fonttools"
 //           fi
 //         '''
 //       }
