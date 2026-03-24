@@ -111,7 +111,7 @@ def driver(config):
 
     if config.get("headless", False):
         options.add_argument("--headless=new")
-        options.add_argument("--indow-size=1920,1080")
+        options.add_argument("--window-size=1920,1080")
 
     if config.get("incognito", True):
         options.add_argument("--incognito")
@@ -125,7 +125,7 @@ def driver(config):
 
 # modern selenium can auto-manage the driver (no Service needed)
 
-    driver = WebDriver.Chorme(options = options)
+    driver = WebDriver.Chrome(options = options)
 #Start a Chrome browser using all the options we added.
 #Save it in a variable called driver.
 
