@@ -75,55 +75,52 @@
 //     }
 //   }
 // }
+
 pipeline {
-  
-  agent any
-  environment {
-    REPORTS_DIR = "reports"
-    SCREEN_DIR  = "screenshots"
-    VENV_DIR    = ".venv"
-    // PASTE YOUR PATH HERE (Use double backslashes \\)
-    PYTHON_EXE  = "C:\\Users\\hiteshr\\AppData\\Local\\Programs\\Python\\Python313\\python.exe"
-  }
+    agent any
 
-  stages {
-    stage('Set up Python') {
-      steps {
-        bat """
-          "${PYTHON_EXE}" -m venv ${VENV_DIR}
-          ${VENV_DIR}\\Scripts\\pip install --upgrade pip
-          ${VENV_DIR}\\Scripts\\pip install selenium pytest pytest-html allure-pytest webdriver-manager
-        """
-      }
-    }
-    // ... the rest stays the same
-
-  stages {
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
+    environment {
+        REPORTS_DIR = "reports"
+        SCREEN_DIR  = "screenshots"
+        VENV_DIR    = ".venv"
+        // IMPORTANT: Use your actual path here with double backslashes
+        PYTHON_EXE  = "C:\Users\hiteshr\AppData\Local\Programs\Python\Python313\python.exe"
     }
 
-    stage('Prepare Folders') {
-      steps {
-        // Windows command to make folders
-        bat "if not exist ${REPORTS_DIR} mkdir ${REPORTS_DIR}"
-        bat "if not exist ${SCREEN_DIR} mkdir ${SCREEN_DIR}"
-      }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Set up Python') {
+            steps {
+                bat """
+                    "${PYTHON_EXE}" -m venv ${VENV_DIR}
+                    ${VENV_DIR}\\Scripts\\pip install --upgrade pip
+                    ${VENV_DIR}\\Scripts\\pip install selenium pytest pytest-html allure-pytest webdriver-manager
+                """
+            }
+        }
+
+        stage('Prepare Folders') {
+            steps {
+                bat "if not exist ${REPORTS_DIR} mkdir ${REPORTS_DIR}"
+                bat "if not exist ${SCREEN_DIR} mkdir ${SCREEN_DIR}"
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                bat "${VENV_DIR}\\Scripts\\pytest -m smoke --html=${REPORTS_DIR}\\report.html --self-contained-html"
+            }
+        }
     }
 
-    stage('Run Tests') {
-      steps {
-        // Run pytest from the virtual environment
-        bat "${VENV_DIR}\\Scripts\\pytest -m smoke --html=${REPORTS_DIR}\\report.html --self-contained-html"
-      }
+    post {
+        always {
+            archiveArtifacts artifacts: "${REPORTS_DIR}/**", allowEmptyArchive: true
+        }
     }
-  }
-
-  post {
-    always {
-      archiveArtifacts artifacts: "${REPORTS_DIR}/**", allowEmptyArchive: true
-    }
-  }
 }
