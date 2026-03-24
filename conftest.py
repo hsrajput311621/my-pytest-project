@@ -125,7 +125,7 @@ def driver(config):
 
 # modern selenium can auto-manage the driver (no Service needed)
 
-    driver = webDriver.Chrome(options=options)
+    driver = webdriver.Chrome(options=options)
 #Start a Chrome browser using all the options we added.
 #Save it in a variable called driver.
 
