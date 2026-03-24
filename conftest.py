@@ -85,7 +85,7 @@ def configure_logging():
 #Also show logs in the console (the terminal window).
         ],
     )
-    logging.getLogger("selenium").setLevel(logging.warning())
+    logging.getLogger("selenium").setLevel(logging.WARNING)
 # Some libraries print too many logs (like Selenium).
 # This line says: “For the logger named selenium, only show WARNING and above.”
     return log_file
@@ -182,10 +182,10 @@ fter each test phase, if it failed, take screenshot and attach to reports"""
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             test_name = item.name.replace("/", "_").replace("\\", "_")
             ss_path = ss_dir /f"{test_name}_{timestamp}.png"
-            """timestamp = current date/time like 20260323_112045.
-test_name = the test’s name, but we replace / and \ so it’s safe for file names.
-ss_path = screenshots/<test_name>_<timestamp>.png
-(Example: screenshots/test_login_20260323_112045.png)"""
+            # = current date/time like 20260323_112045.
+            """test_name = the test’s name, but we replace / and \\ so it’s safe for file names.
+            ss_path = screenshots/<test_name>_<timestamp>.png
+            (Example: screenshots/test_login_20260323_112045.png)"""
             try:
                 driver.save_screenshot(str(ss_path))
                 logging.getLogger(__name__).info(f"Saved Screenshot: {ss_path}")
