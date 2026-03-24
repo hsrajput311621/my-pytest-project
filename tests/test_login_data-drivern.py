@@ -41,11 +41,7 @@ def load_csv_data():
 
 @pytest.mark.smoke
 @pytest.mark.parametrize("record", load_json_data())
-"""This runs the test many times, once for each record from the JSON file.
-Each time, record is one dictionary like:
-{"username": "...", "password": "...", "expected": true/false}"""
 #@pytest.mark.parametrize("username,password,expected", load_json_data())
-
 def test_login_data_json(driver, config, record):
     """driver → the browser fixture (Chrome).
 config → your settings.
