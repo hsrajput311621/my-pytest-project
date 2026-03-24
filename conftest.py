@@ -152,24 +152,22 @@ options.add_argument("--disable-dev-shm-usage")
    then we do extra stuff after.(Think: “Let pytest run, then I’ll check what happened and act.”).'''
 
 @pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_logreport(item, call):
+def pytest_runtest_logreport(report):
     """This is the hook function.
 Pytest calls this to create a report for each test phase.
 item = the test item (info about the test).
 call = details about the test phase that ran (setup/call/teardown).
 fter each test phase, if it failed, take screenshot and attach to reports"""
-    outcome = yield
-    rep = outcome.get_result()
+    yield
     """Because we used hookwrapper=True, we must yield first.
-
     This lets pytest run its own logic.
     After pytest is done, we get back an outcome (result)."""
-    if rep.when != "call": return
+    if report.when != "call": return
     """Tests have a "Warm-up" (setup) and a "Clean-up" (teardown). 
     This line says: "If the failure happened during warm-up, I don't care. 
     I only want to take a photo if the failure
      happened during the actual race (the 'call')."""
-    if rep.failed:
+    if report.failed:
         #If the test body failed, then we continue.
         #If it passed, we skip the screenshot steps.
         driver = item.funcargs.get("driver", None)
